@@ -10,14 +10,23 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Heading } from '@/components/ui/heading'
-import { MessageSquare } from 'lucide-react'
+import { Divide, MessageSquare } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { formSchema } from './constants'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { ChatCompletionRequestMessage } from 'openai'
+import axios from 'axios'
+import { Empty } from '@/components/emptyChat'
+import { Loader } from '@/components/chatLoader'
+import { cn } from '@/lib/utils'
 
 const ChatPage = () => {
+  const router = useRouter()
+  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,7 +37,26 @@ const ChatPage = () => {
   const isLoading = form.formState.isSubmitting
 
   const submitHandler = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    try {
+      const userMessage: ChatCompletionRequestMessage = {
+        role: 'user',
+        content: values.prompt,
+      }
+      const newMessages = [...messages, userMessage]
+
+      const response = await axios.post('/api/chat', {
+        messages: newMessages,
+      })
+
+      setMessages((current) => [...current, userMessage, response.data])
+
+      form.reset()
+    } catch (error: any) {
+      // PRO Modal Popup
+      console.log(error)
+    } finally {
+      router.refresh()
+    }
   }
 
   return (
@@ -64,11 +92,37 @@ const ChatPage = () => {
             />
             <Button
               type='submit'
-              className='col-span-12 lg:col-span-2'>
+              className='col-span-12 lg:col-span-2 w-full'
+              disabled={isLoading}>
               Submit
             </Button>
           </form>
         </Form>
+        <div className='space-y-4 mt-4'>
+          {isLoading ? (
+            <div className='p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
+              <Loader />
+            </div>
+          ) : null}
+          {messages.length === 0 && !isLoading ? (
+            <Empty label='No exisiting messages' />
+          ) : (
+            <div className='flex flex-col-reverse gap-y-4'>
+              {messages.map((message) => (
+                <div
+                  key={message.content}
+                  className={cn(
+                    'p-8 w-full flex items-start gap-x-8 rounded-lg',
+                    message.role === 'user'
+                      ? 'bg-white border border-black/10'
+                      : 'bg-muted'
+                  )}>
+                  {message.content}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
