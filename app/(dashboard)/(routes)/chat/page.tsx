@@ -23,6 +23,8 @@ import axios from 'axios'
 import { Empty } from '@/components/emptyChat'
 import { Loader } from '@/components/chatLoader'
 import { cn } from '@/lib/utils'
+import { UserAvatar } from '@/components/user-avatar'
+import { BotAvatar } from '@/components/bot-avatar'
 
 const ChatPage = () => {
   const router = useRouter()
@@ -94,7 +96,7 @@ const ChatPage = () => {
               type='submit'
               className='col-span-12 lg:col-span-2 w-full'
               disabled={isLoading}>
-              Submit
+              Send
             </Button>
           </form>
         </Form>
@@ -117,7 +119,8 @@ const ChatPage = () => {
                       ? 'bg-white border border-black/10'
                       : 'bg-muted'
                   )}>
-                  {message.content}
+                  {message.role === 'user' ? <UserAvatar /> : <BotAvatar />}
+                  <p className='text-sm'>{message.content}</p>
                 </div>
               ))}
             </div>

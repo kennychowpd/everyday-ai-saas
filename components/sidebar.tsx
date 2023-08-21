@@ -57,7 +57,7 @@ const routes = [
     label: 'Code Generation',
     icon: Code2,
     href: '/code-generation',
-    color: 'text-yellow-300',
+    color: 'text-yellow-400',
   },
   {
     label: 'Settings',
