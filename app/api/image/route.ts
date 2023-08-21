@@ -10,11 +10,9 @@ const openai = new OpenAIApi(configuration)
 
 export async function POST(req: Request) {
   try {
-    console.log(req)
     const { userId } = auth()
     const body = await req.json()
     const { prompt, amount = '1', resolution = '512x512' } = body
-
     if (!userId) {
       return new NextResponse('unauthorized', { status: 401 })
     }
@@ -40,7 +38,8 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json(response.data.data)
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error.message)
     console.log('[IMAGE_ERROR]', error)
     return new NextResponse('Internal error', { status: 500 })
   }
