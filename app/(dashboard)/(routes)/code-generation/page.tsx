@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Heading } from '@/components/ui/heading'
-import { Code2, Divide } from 'lucide-react'
+import { Code2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -25,8 +25,10 @@ import { cn } from '@/lib/utils'
 import { UserAvatar } from '@/components/user-avatar'
 import { BotAvatar } from '@/components/bot-avatar'
 import ReactMarkdown from 'react-markdown'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 const CodeGenerationPage = () => {
+  const proModal = useProModal()
   const router = useRouter()
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,7 +56,9 @@ const CodeGenerationPage = () => {
 
       form.reset()
     } catch (error: any) {
-      // PRO Modal Popup
+      if (error?.response?.status === 403) {
+        proModal.onOpen()
+      }
       console.log(error)
     } finally {
       router.refresh()

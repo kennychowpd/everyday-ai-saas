@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { Configuration, OpenAIApi } from 'openai'
+import { checkApiCount, increaseApiCount } from '@/lib/api-count'
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -31,15 +32,21 @@ export async function POST(req: Request) {
       return new NextResponse('Resolution is required', { status: 400 })
     }
 
+    const freeTrial = await checkApiCount()
+
+    if (!freeTrial) {
+      return new NextResponse('Free trial has expired', { status: 403 })
+    }
     const response = await openai.createImage({
       prompt,
       n: parseInt(amount, 10),
       size: resolution,
     })
 
+    await increaseApiCount()
+
     return NextResponse.json(response.data.data)
   } catch (error: any) {
-    console.log(error.message)
     console.log('[IMAGE_ERROR]', error)
     return new NextResponse('Internal error', { status: 500 })
   }

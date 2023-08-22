@@ -1,14 +1,17 @@
 import Navbar from '@/components/navbar'
 import Sidebar from '@/components/sidebar'
+import { getApiCount } from '@/lib/api-count'
 
-const DashboardLayout = ({ children }): { children: React.ReactNode } => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
+  const apiCount = await getApiCount()
+
   return (
     <div className='h-full relative'>
-      <div className='hidden h-full md:flex md:flex-col md:fixed md:inset-y-0 md:w-72 z-[80] bg-gray-900'>
-        <Sidebar />
+      <div className='hidden h-full md:flex md:flex-col md:fixed md:inset-y-0 md:w-56 bg-gray-900'>
+        <Sidebar apiCount={apiCount} />
       </div>
-      <main className='md:pl-72'>
-        <Navbar />
+      <main className='md:pl-56'>
+        <Navbar apiCount={apiCount} />
         {children}
       </main>
     </div>

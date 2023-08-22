@@ -20,7 +20,6 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Empty } from '@/components/emptyChat'
 import { Loader } from '@/components/chatLoader'
-import { cn } from '@/lib/utils'
 import {
   Select,
   SelectContent,
@@ -30,8 +29,10 @@ import {
 } from '@/components/ui/select'
 import { Card, CardFooter } from '@/components/ui/card'
 import Image from 'next/image'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 const ImageGenerationPage = () => {
+  const proModal = useProModal()
   const [images, setImages] = useState<string[]>([])
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,8 +54,9 @@ const ImageGenerationPage = () => {
       setImages(urls)
       form.reset()
     } catch (error: any) {
-      // PRO Modal Popup
-      console.log(error)
+      if (error?.response?.status === 403) {
+        proModal.onOpen()
+      }
     } finally {
       router.refresh()
     }

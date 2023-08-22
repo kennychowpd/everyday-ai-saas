@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Montserrat } from 'next/font/google'
-import {usePathname} from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -16,6 +16,7 @@ import {
   Settings2,
   Video,
 } from 'lucide-react'
+import FreeTrialCounter from './freeTrialCounter'
 
 const montserrat = Montserrat({
   weight: '600',
@@ -67,7 +68,11 @@ const routes = [
   },
 ]
 
-const Sidebar = () => {
+interface SidebarProps {
+  apiCount: number
+}
+
+const Sidebar = ({ apiCount }: SidebarProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const pathname = usePathname()
 
@@ -85,14 +90,14 @@ const Sidebar = () => {
         <Link
           href='/dashboard'
           className='flex items-center pl-3 mb-14'>
-          <div className='relative w-10 h-10 mr-4'>
+          <div className='relative w-8 h-8 mr-2'>
             <Image
               fill
               alt='Logo'
               src='/logo.png'
             />
           </div>
-          <h1 className={cn('text-2xl font-bold', montserrat.className)}>
+          <h1 className={cn('text-xl font-bold', montserrat.className)}>
             Everyday AI
           </h1>
         </Link>
@@ -101,15 +106,21 @@ const Sidebar = () => {
             <Link
               href={route.href}
               key={route.href}
-              className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition', pathname === route.href ? 'text-white bg-white/10': 'text-zinc-400')}>
+              className={cn(
+                'text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition',
+                pathname === route.href
+                  ? 'text-white bg-white/10'
+                  : 'text-zinc-400'
+              )}>
               <div className='flex flex-1 items-center'>
                 <route.icon className={cn('h-5 w-5 mr-3', route.color)} />
                 {route.label}
               </div>
             </Link>
-              ))}
+          ))}
         </div>
       </div>
+      <FreeTrialCounter apiCount={apiCount} />
     </div>
   )
 }
