@@ -2,6 +2,7 @@ import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai'
 import { checkApiCount, increaseApiCount } from '@/lib/api-count'
+import { checkSubscription } from '@/lib/subscription'
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -34,8 +35,10 @@ export async function POST(req: Request) {
     }
 
     const freeTrial = await checkApiCount()
+    const isPro = await checkSubscription()
 
-    if (!freeTrial) {
+  
+    if (!freeTrial && !isPro) {
       return new NextResponse('Free trial has expired', { status: 403 })
     }
 

@@ -10,9 +10,13 @@ import { useProModal } from '@/hooks/use-pro-modal'
 
 interface FreeTrialCounterProps {
   apiCount: number
+  isPro: boolean
 }
 
-const FreeTrialCounter = ({ apiCount }: FreeTrialCounterProps) => {
+const FreeTrialCounter = ({
+  apiCount = 0,
+  isPro = false,
+}: FreeTrialCounterProps) => {
   const proModal = useProModal()
   const [ismounted, setMounted] = useState(false)
 
@@ -21,6 +25,10 @@ const FreeTrialCounter = ({ apiCount }: FreeTrialCounterProps) => {
   }, [])
 
   if (!ismounted) {
+    return null
+  }
+
+  if (isPro) {
     return null
   }
 

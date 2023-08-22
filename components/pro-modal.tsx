@@ -21,6 +21,9 @@ import { Badge } from './ui/badge'
 import { Card } from './ui/card'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
+import axios from 'axios'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 const tools = [
   {
@@ -63,6 +66,21 @@ const tools = [
 const ProModal = () => {
   const proModal = useProModal()
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onSubscribe = async () => {
+    try {
+      setIsLoading(true)
+      const response = await axios.get('/api/stripe')
+
+      window.location.href = response.data.url
+    } catch (error) {
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <Dialog
       open={proModal.isOpen}
@@ -83,7 +101,7 @@ const ProModal = () => {
             {tools.map((tool) => (
               <Card
                 key={tool.label}
-                className='p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer'>
+                className='p-4 border-black/5 flex items-center justify-between'>
                 <div className='flex items-center gap-x-4'>
                   <div className={cn('p-2 w-fit rounded-md', tool.bgColor)}>
                     <tool.icon className={cn('w-6 h-6', tool.color)} />
@@ -97,6 +115,8 @@ const ProModal = () => {
         </DialogHeader>
         <DialogFooter>
           <Button
+            disabled={isLoading}
+            onClick={onSubscribe}
             className='w-full'
             variant='pro'>
             Upgrade <Sparkles className='w-4 h-4 ml-2 fill-white' />

@@ -21,6 +21,7 @@ import axios from 'axios'
 import { Empty } from '@/components/emptyChat'
 import { Loader } from '@/components/chatLoader'
 import { useProModal } from '@/hooks/use-pro-modal'
+import { toast } from 'react-hot-toast'
 
 const VideoGenerationPage = () => {
   const proModal = useProModal()
@@ -46,8 +47,9 @@ const VideoGenerationPage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()
+      } else {
+        toast.error('Something went wrong')
       }
-
     } finally {
       router.refresh()
     }
@@ -71,7 +73,7 @@ const VideoGenerationPage = () => {
               control={form.control}
               name='prompt'
               render={({ field }) => (
-                <FormItem className='col-span-9'>
+                <FormItem className='col-span-12'>
                   <FormControl className='m-0 p-0'>
                     <Input
                       placeholder='Squirrel jumping between trees'

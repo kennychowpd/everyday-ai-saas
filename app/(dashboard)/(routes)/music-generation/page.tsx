@@ -21,6 +21,7 @@ import axios from 'axios'
 import { Empty } from '@/components/emptyChat'
 import { Loader } from '@/components/chatLoader'
 import { useProModal } from '@/hooks/use-pro-modal'
+import { toast } from 'react-hot-toast'
 
 
 const MusicGenerationPage = () => {
@@ -48,6 +49,8 @@ const MusicGenerationPage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()
+      } else {
+        toast.error('Something went wrong')
       }
     } finally {
       router.refresh()
