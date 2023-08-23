@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import prismadb from '@/lib/prismadb'
 import { stripe } from '@/lib/stripe'
 import { absoluteUrl } from '@/lib/utils'
