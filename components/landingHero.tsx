@@ -10,13 +10,16 @@ export const LandingHero = () => {
   return (
     <div className='text-white font-bold py-36 text-center space-y-5'>
       <div className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold'>
-        <h1>The Best AI Tool for language learning</h1>
+        <h1>The Best Every Day AI Tools</h1>
         <div className='text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-blue-900'>
           <TypewriterComponent
             options={{
               strings: [
-                'Chat with personalized English Tutor.',
-                'AI 선생님 함께 영어를 공부하십기오.',
+                'Chat with AI.',
+                'Code Completion.',
+                'Image Generation.',
+                'Video Generation.',
+                'Music Generation.',
               ],
               autoStart: true,
               loop: true,
@@ -25,14 +28,14 @@ export const LandingHero = () => {
         </div>
       </div>
       <div className='text-sm md:text-xl font-light text-zinc-400'>
-        Learn English usign AI 10x faster
+        Create 10X Faster with AI
       </div>
       <div>
         <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
           <Button
             variant='pro'
             className='md:text-lg p-4 md:p-6 rounded-full font-semibold'>
-            Start Learning English for Free
+            Start TODAY for Free
           </Button>
         </Link>
       </div>
