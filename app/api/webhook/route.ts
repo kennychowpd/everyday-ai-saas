@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import prismadb from '@/lib/prismadb'
 import { stripe } from '@/lib/stripe'
 import { headers } from 'next/headers'
@@ -64,5 +66,3 @@ export async function POST(req: Request) {
 
   return new NextResponse(null, { status: 200 })
 }
-
-export const dynamic = 'force-dynamic'
