@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.1",
@@ -30,9 +31,9 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "lucide-react": "^0.263.1",
-    "next": "13.4.12",
-    "openai": "^3.3.0",
-    "postcss": "8.4.27",
+    "next": "^13.5.6",
+    "openai": "^4.20.1",
+    "postcss": "^8.4.32",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
@@ -49,6 +50,9 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "husky": "^8.0.3",
     "prisma": "^5.1.1"
   }
 }
