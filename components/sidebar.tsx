@@ -1,27 +1,19 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import Link from 'next/link'
-import { Montserrat } from 'next/font/google'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import Image from 'next/image';
+import Link from 'next/link';
+import { Montserrat } from 'next/font/google';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-import { cn } from '@/lib/utils'
-import {
-  Code2,
-  ImageIcon,
-  Layout,
-  MessageSquare,
-  Music,
-  Settings2,
-  Video,
-} from 'lucide-react'
-import FreeTrialCounter from './freeTrialCounter'
+import { cn } from '@/lib/utils';
+import { Code2, ImageIcon, Layout, MessageSquare, Music, Settings2, Video } from 'lucide-react';
+import FreeTrialCounter from './freeTrialCounter';
 
 const montserrat = Montserrat({
   weight: '600',
   subsets: ['latin'],
-})
+});
 
 const routes = [
   {
@@ -42,12 +34,12 @@ const routes = [
     href: '/image-generation',
     color: 'text-purple-500',
   },
-  {
-    label: 'Video Generation',
-    icon: Video,
-    href: '/video-generation',
-    color: 'text-orange-500',
-  },
+  // {
+  //   label: 'Video Generation',
+  //   icon: Video,
+  //   href: '/video-generation',
+  //   color: 'text-orange-500',
+  // },
   {
     label: 'Music Generation',
     icon: Music,
@@ -66,41 +58,33 @@ const routes = [
     href: '/settings',
     color: 'text-gray-500',
   },
-]
+];
 
 interface SidebarProps {
-  apiCount: number
-  isPro: boolean
+  apiCount: number;
+  isPro: boolean;
 }
 
 const Sidebar = ({ apiCount = 0, isPro = false }: SidebarProps) => {
-  const [isMounted, setIsMounted] = useState(false)
-  const pathname = usePathname()
+  const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) {
-    return null
+    return null;
   }
 
   return (
     <div className='space-y-4 py-4 flex flex-col h-full bg-gray-900 text-white'>
       <div className='px-3 py-2 flex-1'>
-        <Link
-          href='/dashboard'
-          className='flex items-center pl-3 mb-14'>
+        <Link href='/dashboard' className='flex items-center pl-3 mb-14'>
           <div className='relative w-8 h-8 mr-2'>
-            <Image
-              fill
-              alt='Logo'
-              src='/logo.png'
-            />
+            <Image fill alt='Logo' src='/logo.png' />
           </div>
-          <h1 className={cn('text-xl font-bold', montserrat.className)}>
-            Everyday AI
-          </h1>
+          <h1 className={cn('text-xl font-bold', montserrat.className)}>Everyday AI</h1>
         </Link>
         <div className='space-y-1'>
           {routes.map((route) => (
@@ -109,9 +93,7 @@ const Sidebar = ({ apiCount = 0, isPro = false }: SidebarProps) => {
               key={route.href}
               className={cn(
                 'text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition',
-                pathname === route.href
-                  ? 'text-white bg-white/10'
-                  : 'text-zinc-400'
+                pathname === route.href ? 'text-white bg-white/10' : 'text-zinc-400'
               )}>
               <div className='flex flex-1 items-center'>
                 <route.icon className={cn('h-5 w-5 mr-3', route.color)} />
@@ -121,12 +103,9 @@ const Sidebar = ({ apiCount = 0, isPro = false }: SidebarProps) => {
           ))}
         </div>
       </div>
-      <FreeTrialCounter
-        apiCount={apiCount}
-        isPro={isPro}
-      />
+      <FreeTrialCounter apiCount={apiCount} isPro={isPro} />
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

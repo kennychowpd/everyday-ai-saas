@@ -1,20 +1,13 @@
-'use client'
+'use client';
 
-import { Card } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
-import {
-  ArrowRight,
-  Code2,
-  ImageIcon,
-  MessageSquare,
-  Music,
-  Video,
-} from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { ArrowRight, Code2, ImageIcon, MessageSquare, Music, Video } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const DashboardPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const tools = [
     {
       label: 'Chat',
@@ -51,14 +44,12 @@ const DashboardPage = () => {
       color: 'text-yellow-300',
       bgColor: 'bg-yellow-300/10',
     },
-  ]
+  ];
 
   return (
     <div>
       <div className='mb-8 space-y-4'>
-        <h2 className='text-2xl md:text-4xl font-bold text-center'>
-          Experience the power of AI
-        </h2>
+        <h2 className='text-2xl md:text-4xl font-bold text-center'>Experience the power of AI</h2>
         <p className='text-muted-foreground font-light text-sm md:text-lg text-center'>
           Do everything better and faster - AI powers in your hands
         </p>
@@ -80,7 +71,7 @@ const DashboardPage = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

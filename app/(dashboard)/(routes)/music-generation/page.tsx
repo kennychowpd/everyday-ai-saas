@@ -25,7 +25,7 @@ const MusicGenerationPage = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: '',
-      duration: '',
+      duration: '5',
     },
   });
 
@@ -82,25 +82,6 @@ const MusicGenerationPage = () => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name='duration'
-              render={({ field }) => (
-                <div className='flex gap-1 col-span-3 items-center'>
-                  <FormItem className='w-full'>
-                    <FormControl className='m-0 p-0'>
-                      <Input
-                        placeholder='1-240'
-                        disabled={isLoading}
-                        className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                  <p className='text-sm'>sec</p>
-                </div>
-              )}
-            />
             <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
               Send
             </Button>
@@ -110,9 +91,6 @@ const MusicGenerationPage = () => {
           {isLoading ? (
             <div className='gap-4 flex-col p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
               <Loader />
-              <p className='text-sm text-muted-foreground text-center'>
-                Might take up to a minute for the first generation of a session, thank you for your patience!
-              </p>
             </div>
           ) : null}
           {!music && !isLoading && <Empty label='No music generated' />}
