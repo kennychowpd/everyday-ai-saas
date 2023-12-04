@@ -62,7 +62,7 @@ const CodeGenerationPage = () => {
   };
 
   return (
-    <div>
+    <div className='flex flex-col flex-1'>
       <Heading
         title='Code Generation'
         description='Generate code using descriptive text'
@@ -70,43 +70,12 @@ const CodeGenerationPage = () => {
         iconColor='text-yellow-400'
         bgColor='bg-yellow-400/10'
       />
-      <div className='px-4 lg:px-8'>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(submitHandler)}
-            className='rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2'>
-            <FormField
-              control={form.control}
-              name='prompt'
-              render={({ field }) => (
-                <FormItem className='col-span-12 lg:col-span-10'>
-                  <FormControl className='m-0 p-0'>
-                    <Input
-                      placeholder='Simple toggle button using react hooks.'
-                      disabled={isLoading}
-                      className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
-              Send
-            </Button>
-          </form>
-        </Form>
+      <div className='h-full px-4 lg:px-8 flex flex-col justify-between'>
         <div className='space-y-4 mt-4'>
-          {isLoading ? (
-            <div className='p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
-              <Loader />
-            </div>
-          ) : null}
           {messages.length === 0 && !isLoading ? (
             <Empty label='No exisiting messages' />
           ) : (
-            <div className='flex flex-col-reverse gap-y-4'>
+            <div className='flex flex-col gap-y-4'>
               {messages.map((message) => (
                 <div
                   key={messages.indexOf(message)}
@@ -132,6 +101,39 @@ const CodeGenerationPage = () => {
               ))}
             </div>
           )}
+          {isLoading ? (
+            <div className='p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
+              <Loader />
+            </div>
+          ) : null}
+        </div>
+        <div className='sticky bottom-0 '>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(submitHandler)}
+              className='rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2 bg-white'>
+              <FormField
+                control={form.control}
+                name='prompt'
+                render={({ field }) => (
+                  <FormItem className='col-span-12 lg:col-span-10'>
+                    <FormControl className='m-0 p-0'>
+                      <Input
+                        placeholder='Simple toggle button using react hooks.'
+                        disabled={isLoading}
+                        className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
+                Send
+              </Button>
+            </form>
+          </Form>
         </div>
       </div>
     </div>

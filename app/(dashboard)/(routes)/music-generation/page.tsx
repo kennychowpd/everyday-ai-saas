@@ -51,7 +51,7 @@ const MusicGenerationPage = () => {
   };
 
   return (
-    <div>
+    <div className='flex flex-col flex-1'>
       <Heading
         title='Music Generation'
         description='Turn your words into music'
@@ -59,46 +59,48 @@ const MusicGenerationPage = () => {
         iconColor='text-red-500'
         bgColor='bg-red-500/10'
       />
-      <div className='px-4 lg:px-8'>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(submitHandler)}
-            className='rounded-lg border w-full py-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2'>
-            <FormField
-              control={form.control}
-              name='prompt'
-              render={({ field }) => (
-                <FormItem className='col-span-9'>
-                  <FormControl className='m-0 p-0'>
-                    <Input
-                      placeholder='A piano solo'
-                      disabled={isLoading}
-                      className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
-              Send
-            </Button>
-          </form>
-        </Form>
+      <div className='h-full px-4 lg:px-8 flex flex-col justify-between'>
         <div className='space-y-4 mt-4'>
-          {isLoading ? (
-            <div className='gap-4 flex-col p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
-              <Loader />
-            </div>
-          ) : null}
           {!music && !isLoading && <Empty label='No music generated' />}
           {music && (
             <audio controls className='w-full mt-8'>
               <source src={music} />
             </audio>
           )}
+          {isLoading ? (
+            <div className='gap-4 flex-col p-8 rounded-lg w-full flex items-center justify-center bg-muted'>
+              <Loader />
+            </div>
+          ) : null}
+        </div>
+        <div className='sticky bottom-0'>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(submitHandler)}
+              className='rounded-lg border w-full py-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2'>
+              <FormField
+                control={form.control}
+                name='prompt'
+                render={({ field }) => (
+                  <FormItem className='col-span-9'>
+                    <FormControl className='m-0 p-0'>
+                      <Input
+                        placeholder='A piano solo'
+                        disabled={isLoading}
+                        className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
+                Send
+              </Button>
+            </form>
+          </Form>
         </div>
       </div>
     </div>

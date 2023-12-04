@@ -35,9 +35,10 @@ const FreeTrialCounter = ({ apiCount = 0, isPro = false }: FreeTrialCounterProps
         <CardContent className='py-6'>
           <div className='flex flex-col gap-2 items-center text-xs text-white mb-4'>
             <p>
-              {apiCount} / {MAX_FREE_COUNTS} Free Generations
+              {Number(MAX_FREE_COUNTS) - Number(apiCount)} / {MAX_FREE_COUNTS}
             </p>
-            <Progress className='h-3' value={(apiCount / MAX_FREE_COUNTS) * 100} />
+            <p>Free generations left</p>
+            <Progress className='h-3' value={((Number(MAX_FREE_COUNTS) - Number(apiCount)) / MAX_FREE_COUNTS) * 100} />
           </div>
           <Button onClick={proModal.onOpen} className='w-full' variant='pro'>
             Upgrade <Sparkles className='w-4 h-4 ml-2 fill-white' />
