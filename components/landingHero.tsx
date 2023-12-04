@@ -27,11 +27,11 @@ export const LandingHero = () => {
           />
         </div>
       </div>
-      <div className='text-sm md:text-xl font-light text-zinc-400'>Create 10X Faster with AI</div>
+      <div className='text-sm md:text-xl font-light text-zinc-400'>Learn generative AI Today</div>
       <div>
         <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
           <Button variant='pro' className='md:text-lg p-4 md:p-6 rounded-full font-semibold'>
-            Start TODAY for Free
+            Try Now for Free
           </Button>
         </Link>
       </div>

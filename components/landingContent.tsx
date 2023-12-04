@@ -1,57 +1,35 @@
-'use client'
+'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 const testimonials = [
   {
-    name: 'Antonio',
-    avatar: 'A',
+    name: 'Kenny',
+    avatar: 'K',
     title: 'Software Engineer',
-    description: 'This is the best application I have used!',
+    description: 'Easy to use!',
   },
   {
-    name: 'Antonio',
+    name: 'Adora',
     avatar: 'A',
-    title: 'Software Engineer',
-    description: 'This is the best application I have used!',
+    title: 'Concept Artist',
+    description: 'I never knew I can also create with generative AI until now.',
   },
   {
-    name: 'Antonio',
-    avatar: 'A',
-    title: 'Software Engineer',
-    description: 'This is the best application I have used!',
+    name: 'Sam',
+    avatar: 'S',
+    title: 'Writer',
+    description: 'This help me write faster than ever!',
   },
-  {
-    name: 'Antonio',
-    avatar: 'A',
-    title: 'Software Engineer',
-    description: 'This is the best application I have used!',
-  },
-  {
-    name: 'Antonio',
-    avatar: 'A',
-    title: 'Software Engineer',
-    description: 'This is the best application I have used!',
-  },
-  {
-    name: 'Antonio',
-    avatar: 'A',
-    title: 'Software Engineer',
-    description: 'This is the best application I have used!',
-  },
-]
+];
 
 export const LandingContent = () => {
   return (
     <div className='px-10 pb-20'>
-      <h2 className='text-center text-4xl text-white font-extrabold mb-10'>
-        Testimonials
-      </h2>
+      <h2 className='text-center text-4xl text-white font-extrabold mb-10'>Testimonials</h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {testimonials.map((item) => (
-          <Card
-            key={item.description}
-            className='bg-zinc-800 border-none text-white'>
+          <Card key={item.description} className='bg-zinc-800 border-none text-white'>
             <CardHeader>
               <CardTitle className='flex items-center gap-2'>
                 <div>
@@ -65,5 +43,5 @@ export const LandingContent = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
