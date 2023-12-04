@@ -1,7 +1,6 @@
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
-
 import { checkApiCount, increaseApiCount } from '@/lib/api-count';
 import { checkSubscription } from '@/lib/subscription';
 

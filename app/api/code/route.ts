@@ -1,8 +1,8 @@
 import { auth } from '@clerk/nextjs';
 import { NextResponse } from 'next/server';
-import { OpenAI } from 'openai';
 import { checkApiCount, increaseApiCount } from '@/lib/api-count';
 import { checkSubscription } from '@/lib/subscription';
+import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

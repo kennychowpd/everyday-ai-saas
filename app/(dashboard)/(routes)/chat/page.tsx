@@ -1,70 +1,68 @@
-'use client'
+'use client';
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Heading } from '@/components/ui/heading'
-import { MessageSquare } from 'lucide-react'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { formSchema } from './constants'
-import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { ChatCompletionRequestMessage } from 'openai'
-import axios from 'axios'
-import { Empty } from '@/components/emptyChat'
-import { Loader } from '@/components/chatLoader'
-import { cn } from '@/lib/utils'
-import { UserAvatar } from '@/components/user-avatar'
-import { BotAvatar } from '@/components/bot-avatar'
-import { useProModal } from '@/hooks/use-pro-modal'
-import { toast } from 'react-hot-toast'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Heading } from '@/components/ui/heading';
+import { MessageSquare } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { formSchema } from './constants';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import axios from 'axios';
+import { Empty } from '@/components/emptyChat';
+import { Loader } from '@/components/chatLoader';
+import { cn } from '@/lib/utils';
+import { UserAvatar } from '@/components/user-avatar';
+import { BotAvatar } from '@/components/bot-avatar';
+import { useProModal } from '@/hooks/use-pro-modal';
+import { toast } from 'react-hot-toast';
+
+type ChatMessage = {
+  role: string;
+  content: string;
+};
 
 const ChatPage = () => {
-  const proModal = useProModal()
-  const router = useRouter()
-  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
+  const proModal = useProModal();
+  const router = useRouter();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: '',
     },
-  })
+  });
 
-  const isLoading = form.formState.isSubmitting
+  const isLoading = form.formState.isSubmitting;
 
   const submitHandler = async (values: z.infer<typeof formSchema>) => {
     try {
-      const userMessage: ChatCompletionRequestMessage = {
+      const userMessage: ChatMessage = {
         role: 'user',
         content: values.prompt,
-      }
-      const newMessages = [...messages, userMessage]
+      };
+      const newMessages = [...messages, userMessage];
 
       const response = await axios.post('/api/chat', {
         messages: newMessages,
-      })
+      });
 
-      setMessages((current) => [...current, userMessage, response.data])
+      setMessages((current) => [...current, userMessage, response.data]);
 
-      form.reset()
+      form.reset();
     } catch (error: any) {
       if (error?.response?.status === 403) {
-        proModal.onOpen()
-      }else{
-        toast.error('Something went wrong')
+        proModal.onOpen();
+      } else {
+        toast.error('Something went wrong');
       }
     } finally {
-      router.refresh()
+      router.refresh();
     }
-  }
+  };
 
   return (
     <div>
@@ -97,10 +95,7 @@ const ChatPage = () => {
                 </FormItem>
               )}
             />
-            <Button
-              type='submit'
-              className='col-span-12 lg:col-span-2 w-full'
-              disabled={isLoading}>
+            <Button type='submit' className='col-span-12 lg:col-span-2 w-full' disabled={isLoading}>
               Send
             </Button>
           </form>
@@ -120,9 +115,7 @@ const ChatPage = () => {
                   key={message.content}
                   className={cn(
                     'p-8 w-full flex items-start gap-x-8 rounded-lg',
-                    message.role === 'user'
-                      ? 'bg-white border border-black/10'
-                      : 'bg-muted'
+                    message.role === 'user' ? 'bg-white border border-black/10' : 'bg-muted'
                   )}>
                   {message.role === 'user' ? <UserAvatar /> : <BotAvatar />}
                   <p className='text-sm'>{message.content}</p>
@@ -133,7 +126,7 @@ const ChatPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChatPage
+export default ChatPage;
